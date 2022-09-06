@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestProduct_Enable_ThrowWhenPriceIsLessOrEqualToZero(t *testing.T) {
+func TestProduct_Enable_ErrorWhenPriceIsLessOrEqualToZero(t *testing.T) {
 	p := application.Product{
 		ID:     "",
 		Name:   "Product",
@@ -29,7 +29,7 @@ func TestProduct_Enable_Success(t *testing.T) {
 	require.Nil(t, err)
 }
 
-func TestProduct_Disable_ThrowWhenPriceIsNotZero(t *testing.T) {
+func TestProduct_Disable_ErrorWhenPriceIsNotZero(t *testing.T) {
 	p := application.Product{
 		ID:     "",
 		Name:   "",
