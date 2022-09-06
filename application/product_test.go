@@ -2,6 +2,7 @@ package application_test
 
 import (
 	"github.com/danilobandeira29/hexagonal-architecture/application"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
@@ -49,4 +50,15 @@ func TestProduct_Disable_SuccessfullyWhenPriceIsZero(t *testing.T) {
 	err := p.Disable()
 	require.Nil(t, err)
 	require.Equal(t, application.DISABLED, p.GetStatus())
+}
+
+func TestProduct_IsValid_ErrorWhenStatusIsNotEnabledOrDisabled(t *testing.T) {
+	p := application.Product{
+		ID:     uuid.New().String(),
+		Name:   "Product",
+		Status: "invalid status",
+		Price:  1,
+	}
+	_, err := p.IsValid()
+	require.Error(t, err, "the status must be enabled or disabled")
 }
