@@ -3,6 +3,7 @@ package application
 import (
 	"errors"
 	"github.com/asaskevich/govalidator"
+	"github.com/google/uuid"
 )
 
 func init() {
@@ -19,6 +20,26 @@ type ProductInterface interface {
 	GetPrice() float64
 }
 
+type ProductServiceInterface interface {
+	Get(id string) (ProductInterface, error)
+	Create(name string, price float64) (ProductInterface, error)
+	Enable(p ProductInterface) (ProductInterface, error)
+	Disable(p ProductInterface) (ProductInterface, error)
+}
+
+type ProductReaderInterface interface {
+	Get(id string) (ProductInterface, error)
+}
+
+type ProductWriterInterface interface {
+	Save(p ProductInterface) (ProductInterface, error)
+}
+
+type ProductPersistenceInterface interface {
+	ProductReaderInterface
+	ProductWriterInterface
+}
+
 const (
 	DISABLED = "disabled"
 	ENABLED  = "enabled"
@@ -29,6 +50,13 @@ type Product struct {
 	Name   string  `valid:"required"`
 	Status string  `valid:"required"`
 	Price  float64 `valid:"float,optional"`
+}
+
+func NewProduct() *Product {
+	return &Product{
+		ID:     uuid.New().String(),
+		Status: DISABLED,
+	}
 }
 
 func (p *Product) IsValid() (bool, error) {
