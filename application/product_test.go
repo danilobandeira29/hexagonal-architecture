@@ -32,9 +32,21 @@ func TestProduct_Disable_ThrowWhenPriceIsNotZero(t *testing.T) {
 	p := application.Product{
 		ID:     "",
 		Name:   "",
-		Status: "",
+		Status: application.ENABLED,
 		Price:  1,
 	}
 	err := p.Disable()
 	require.Error(t, err, "the price must be zero in order to have the product disabled")
+}
+
+func TestProduct_Disable_SuccessfullyWhenPriceIsZero(t *testing.T) {
+	p := application.Product{
+		ID:     "",
+		Name:   "",
+		Status: application.ENABLED,
+		Price:  0,
+	}
+	err := p.Disable()
+	require.Nil(t, err)
+	require.Equal(t, application.DISABLED, p.GetStatus())
 }
