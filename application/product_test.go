@@ -81,8 +81,9 @@ func TestProduct_IsValid_Success(t *testing.T) {
 		Status: application.ENABLED,
 		Price:  0,
 	}
-	_, err := p.IsValid()
+	isValid, err := p.IsValid()
 	require.Nil(t, err)
+	require.Equal(t, true, isValid)
 }
 
 func TestProduct_IsValid_ErrWhenIDIsNotUuid(t *testing.T) {
