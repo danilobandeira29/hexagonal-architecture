@@ -84,3 +84,14 @@ func TestProduct_IsValid_Success(t *testing.T) {
 	_, err := p.IsValid()
 	require.Nil(t, err)
 }
+
+func TestProduct_IsValid_ErrWhenIDIsNotUuid(t *testing.T) {
+	p := application.Product{
+		ID:     "not uuid",
+		Name:   "Product",
+		Status: application.ENABLED,
+		Price:  0,
+	}
+	_, err := p.IsValid()
+	require.Error(t, err)
+}
