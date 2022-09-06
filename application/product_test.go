@@ -62,3 +62,14 @@ func TestProduct_IsValid_ErrorWhenStatusIsNotEnabledOrDisabled(t *testing.T) {
 	_, err := p.IsValid()
 	require.Error(t, err, "the status must be enabled or disabled")
 }
+
+func TestProduct_IsValid_ErrorWhenPriceIsLessThanZero(t *testing.T) {
+	p := application.Product{
+		ID:     uuid.New().String(),
+		Name:   "Product",
+		Status: application.ENABLED,
+		Price:  -1,
+	}
+	_, err := p.IsValid()
+	require.Equal(t, "the price must be greater or equal to zero", err.Error())
+}
