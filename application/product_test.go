@@ -73,3 +73,14 @@ func TestProduct_IsValid_ErrorWhenPriceIsLessThanZero(t *testing.T) {
 	_, err := p.IsValid()
 	require.Equal(t, "the price must be greater or equal to zero", err.Error())
 }
+
+func TestProduct_IsValid_Success(t *testing.T) {
+	p := application.Product{
+		ID:     uuid.New().String(),
+		Name:   "Product",
+		Status: application.ENABLED,
+		Price:  0,
+	}
+	_, err := p.IsValid()
+	require.Nil(t, err)
+}
