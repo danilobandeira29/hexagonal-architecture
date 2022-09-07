@@ -50,7 +50,7 @@ func TestProductService_Create_Success(t *testing.T) {
 	require.Equal(t, product, result)
 }
 
-func TestProductService_Enable(t *testing.T) {
+func TestProductService_Enable_Success(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	product := mock_application.NewMockProductInterface(ctrl)
 	product.EXPECT().Enable().Return(nil)
@@ -60,6 +60,20 @@ func TestProductService_Enable(t *testing.T) {
 		Persistence: persistence,
 	}
 	result, err := service.Enable(product)
+	require.Nil(t, err)
+	require.Equal(t, product, result)
+}
+
+func TestProductService_Disable_Success(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	product := mock_application.NewMockProductInterface(ctrl)
+	product.EXPECT().Disable().Return(nil)
+	persistence := mock_application.NewMockProductPersistenceInterface(ctrl)
+	persistence.EXPECT().Save(gomock.Any()).Return(product, nil)
+	service := application.ProductService{
+		Persistence: persistence,
+	}
+	result, err := service.Disable(product)
 	require.Nil(t, err)
 	require.Equal(t, product, result)
 }
