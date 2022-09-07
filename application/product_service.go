@@ -38,3 +38,15 @@ func (s *ProductService) Enable(p ProductInterface) (ProductInterface, error) {
 	}
 	return product, nil
 }
+
+func (s *ProductService) Disable(p ProductInterface) (ProductInterface, error) {
+	err := p.Disable()
+	if err != nil {
+		return &Product{}, err
+	}
+	product, err := s.Persistence.Save(p)
+	if err != nil {
+		return &Product{}, err
+	}
+	return product, nil
+}
