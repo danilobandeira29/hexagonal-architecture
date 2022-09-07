@@ -1,6 +1,6 @@
 # Implements Hexagonal Architecture using TDD
 
-- [/] Application
+- [x] Application
 - [ ] Ports
 - [ ] Adapters
 
