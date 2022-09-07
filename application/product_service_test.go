@@ -35,3 +35,17 @@ func TestProductService_Get_ErrWhenPersistenceReturnErr(t *testing.T) {
 	require.Nil(t, result)
 	require.Error(t, err)
 }
+
+func TestProductService_Create_Success(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	product := mock_application.NewMockProductInterface(ctrl)
+	persistence := mock_application.NewMockProductPersistenceInterface(ctrl)
+	persistence.EXPECT().Save(gomock.Any()).Return(product, nil)
+	service := application.ProductService{
+		Persistence: persistence,
+	}
+	result, err := service.Create("product name", 44.4)
+	require.Nil(t, err)
+	require.Equal(t, product, result)
+}
