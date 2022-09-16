@@ -6,6 +6,12 @@
     - [x] cli using cobra
     - [x] webserver
 
+# Install dependencies
+
+```bash
+$ go get ./...
+```
+
 # Run
 
 ```bash
