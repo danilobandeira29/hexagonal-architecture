@@ -52,11 +52,11 @@ flags:
     - Example: `--action=create --product="Product Name" --price=44.4`
 
 ```bash
-$ go run main.go cli --help
+$ go run main.go cli --action=create --product="Product Name" --price=44.4
 ```
 
 or
 
 ```bash
-$ go run main.go cli --action=create --product="Product Name" --price=44.4
+$ go run main.go cli --help
 ```
