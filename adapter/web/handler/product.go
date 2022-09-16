@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"github.com/codegangsta/negroni"
 	"github.com/danilobandeira29/hexagonal-architecture/application"
 	"github.com/gorilla/mux"
@@ -20,6 +21,11 @@ func getProduct(service application.ProductServiceInterface) http.Handler {
 		product, err := service.Get(id)
 		if err != nil {
 			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+		err = json.NewEncoder(w).Encode(product)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 	})
